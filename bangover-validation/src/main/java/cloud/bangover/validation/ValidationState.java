@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -155,17 +156,14 @@ public final class ValidationState {
     errorMessages.get(group).add(message);
   }
 
+  @Getter
   @ToString
-  @EqualsAndHashCode
   @AllArgsConstructor
+  @EqualsAndHashCode(doNotUseGetters = true)
   private static class DefaultErrorState implements ErrorState {
     private Collection<ErrorMessage> ungroupedErrors;
     private Map<String, Collection<ErrorMessage>> groupedErrors;
 
-    @Override
-    public Collection<ErrorMessage> getUngroupedErrors() {
-      return Collections.unmodifiableCollection(ungroupedErrors);
-    }
 
     @Override
     public Collection<GroupedError> getGroupedErrors() {
